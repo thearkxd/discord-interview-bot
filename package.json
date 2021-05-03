@@ -1,0 +1,15 @@
+{
+  "name": "interview",
+  "version": "0.0.1",
+  "description": "",
+  "main": "theark.js",
+  "scripts": {
+    "start": "node theark.js"
+  },
+  "dependencies": {
+    "ark.db": "^2.1.0",
+    "discord.js": "^12.5.3",
+    "moment": "^2.29.1"
+  },
+  "license": "MIT"
+}
