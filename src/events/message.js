@@ -26,17 +26,17 @@ O kanaldan botun sorduğu soruları cevaplayarak yetkili başvurusunda bulunabil
   });
   const newMessage = await newChannel.send(`
 Hoş Geldin ${message.author.toString()}
-Eğer Başvuruya Devam Etmek İstiyorsan, ✅ Emojisine Tıkla!
+Eğer Başvuruya Devam Etmek İstiyorsan, ${conf.mark} Emojisine Tıkla!
 Tıkladıktan Sonra Botun Soracağı Soruları Cevaplamalısın!
 \`Not: Başvuru Yaparken Tek Mesaj Halinde Cevap Veriniz. Bütün Soruları Cevaplamak İçin 5 Dakikanız Var\`
   `);
   await newMessage.react(conf.mark);
   await newMessage.react(conf.cross);
 
-  const dewamke = newMessage.createReactionCollector((reaction, user) => reaction.emoji.name === conf.mark && user.id === message.author.id, { time: 1000 * 60 * 5 });
-  const iptalke = newMessage.createReactionCollector((reaction, user) => reaction.emoji.name === conf.cross && user.id === message.author.id, { time: 1000 * 60 * 5 });
+  const approved = newMessage.createReactionCollector((reaction, user) => reaction.emoji.name === conf.mark && user.id === message.author.id, { time: 1000 * 60 * 5 });
+  const denied = newMessage.createReactionCollector((reaction, user) => reaction.emoji.name === conf.cross && user.id === message.author.id, { time: 1000 * 60 * 5 });
 
-  dewamke.on("collect", async () => {
+  approved.on("collect", async () => {
     newChannel.overwritePermissions([{ id: message.author.id, allow: ["SEND_MESSAGES"] }]);
     newMessage.delete();
     await newChannel.send("Öncelikle adını söyler misin?");
@@ -87,9 +87,9 @@ Tıkladıktan Sonra Botun Soracağı Soruları Cevaplamalısın!
     }, 10000);
   });
 
-  iptalke.on("collect", () => newChannel.delete());
+  denied.on("collect", () => newChannel.delete());
 
-  dewamke.on("end", (collected) => {
+  approved.on("end", (collected) => {
     if (collected.size !== 0) return;
     newChannel.delete();
   });
