@@ -7,7 +7,7 @@
     "start": "node theark.js"
   },
   "dependencies": {
-    "ark.db": "^2.1.0",
+    "ark.db": "^2.6.9",
     "discord.js": "^12.5.3",
     "moment": "^2.29.1"
   },
